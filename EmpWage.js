@@ -31,16 +31,24 @@
         }
 
     }
+
+    function calcDailyWage(empHrs){
+        return empHrs * WAGE_PER_HOUR;
+    }
     
+    let empHrs = 0;
     let totalEmpHrs = 0;
     let totalWorkingDays = 0;
+    let empWageArray = new Array();
     while(totalEmpHrs <= MAX_HRS_IN_MONTH &&
           totalWorkingDays <= NUM_OF_WORKING_DAYS){
               totalWorkingDays++;
               let empCheck = Math.floor(Math.random() * 10) % 3;
+              empHrs = getWorkingHours(empCheck);
               totalEmpHrs += getWorkingHours(empCheck);
+              empWageArray.push(calcDailyWage(empHrs));
         }
    
-    let empWage = totalEmpHrs * WAGE_PER_HOUR;
-    console.log("Total Days: "+totalWorkingDays+" Total Hrs: "+totalEmpHrs+" Employee Wage: "+empWage);
+    let empWage = calcDailyWage(totalEmpHrs);
+    console.log("UC6- Total Days: "+totalWorkingDays+" Total Hrs: "+totalEmpHrs+" Employee Wage: "+empWage);
 }
