@@ -40,6 +40,7 @@
     let totalWorkingDays = 0;
     let empWageArray = new Array();
     let empDailyWageMap = new Map();
+    let empDailyHrsMap = new Map();
     while(totalEmpHrs <= MAX_HRS_IN_MONTH &&
           totalWorkingDays <= NUM_OF_WORKING_DAYS){
               totalWorkingDays++;
@@ -48,6 +49,7 @@
               totalEmpHrs += empHrs;
               empWageArray.push(calcDailyWage(empHrs));
               empDailyWageMap.set(totalWorkingDays, calcDailyWage(empHrs));
+              empDailyHrsMap.set(totalWorkingDays, empHrs);
         }
    
     let empWage = calcDailyWage(totalEmpHrs);
@@ -118,5 +120,31 @@
     console.log("UC7G - Number of days employee worked: "+empWageArray.reduce(totalDayaWorked, 0));
 
     //UC8 - Map function
-    console.log("UC8 - Emp Wage Map totalWage: "+Array.from(empDailyWageMap.values()).reduce(totalWages,0));
+    console.log("UC8 - Emp Wage Map totalWage: "+Array.from(empDailyWageMap.values())
+                                                      .reduce(totalWages,0));
+    
+    //UC9 - Arrow functions
+    const findTotal = (totalValue,dailyValue) => {
+        return totalValue + dailyValue;
+    }
+    let totalHours = Array.from(empDailyHrsMap.values())
+                          .filter(dailyHours => dailyHours > 0)
+                          .reduce(findTotal,0);
+    let totalSalary = empWageArray
+                                .filter(dailyWage => dailyWage > 0)
+                                .reduce(findTotal,0);  
+    console.log("UC9A - Emp Wage with Arrow "+" Total Hrs: "
+                +totalHours+" Total Wages: "+totalSalary);
+                
+    let nonWorkingDays =  new Array();
+    let partWorkingDays = new Array();
+    let fullWorkingDays = new Array();
+    empDailyHrsMap.forEach((value, key, map) => {
+        if(value == 8) fullWorkingDays.push(key);
+        else if(value == 4) partWorkingDays.push(key);
+        else nonWorkingDays.push(key);
+    });
+    console.log("Full Working Days: "+fullWorkingDays);
+    console.log("Part Working Days: "+partWorkingDays);
+    console.log("Non Working Days: "+nonWorkingDays);            
 }
