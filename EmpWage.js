@@ -36,17 +36,18 @@
         return empHrs * WAGE_PER_HOUR;
     }
     
-    let empHrs = 0;
     let totalEmpHrs = 0;
     let totalWorkingDays = 0;
     let empWageArray = new Array();
+    let empDailyWageMap = new Map();
     while(totalEmpHrs <= MAX_HRS_IN_MONTH &&
           totalWorkingDays <= NUM_OF_WORKING_DAYS){
               totalWorkingDays++;
               let empCheck = Math.floor(Math.random() * 10) % 3;
-              empHrs = getWorkingHours(empCheck);
-              totalEmpHrs += getWorkingHours(empCheck);
+              let empHrs = getWorkingHours(empCheck);
+              totalEmpHrs += empHrs;
               empWageArray.push(calcDailyWage(empHrs));
+              empDailyWageMap.set(totalWorkingDays, calcDailyWage(empHrs));
         }
    
     let empWage = calcDailyWage(totalEmpHrs);
@@ -115,4 +116,7 @@
     }
 
     console.log("UC7G - Number of days employee worked: "+empWageArray.reduce(totalDayaWorked, 0));
+
+    //UC8 - Map function
+    console.log("UC8 - Emp Wage Map totalWage: "+Array.from(empDailyWageMap.values()).reduce(totalWages,0));
 }
